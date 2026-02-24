@@ -32,6 +32,10 @@ export function TestimonialsSection() {
   // Fetch testimonials from Supabase
   const fetchTestimonials = async () => {
     try {
+      if (!supabase) {
+        setTestimonials([])
+        return
+      }
       const { data, error } = await supabase
         .from('testimonials')
         .select('*')
@@ -56,6 +60,12 @@ export function TestimonialsSection() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    
+    if (!supabase) {
+      alert('ระบบไม่พร้อมทำการส่ง กรุณาลองใหม่ภายหลัง')
+      return
+    }
+    
     setIsSubmitting(true)
 
     try {
